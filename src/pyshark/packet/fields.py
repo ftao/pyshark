@@ -35,7 +35,7 @@ class LayerField(SlotsPickleable):
         val = self.show
         if not val:
             val = self.raw_value
-        if not val:
+        if not val and val != 0:
             val = self.showname
         return val
 
