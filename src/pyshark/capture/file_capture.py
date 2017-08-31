@@ -7,6 +7,10 @@ if sys.version_info >= (3, 0):
     basestring = str
 
 
+class FileNotFoundError(Exception):
+    pass
+
+
 class FileCapture(Capture):
     """
     A class representing a capture read from a file.
@@ -15,7 +19,7 @@ class FileCapture(Capture):
     def __init__(self, input_file=None, keep_packets=True, display_filter=None, only_summaries=False,
                  decryption_key=None, encryption_type='wpa-pwk', decode_as=None,
                  disable_protocol=None, tshark_path=None, override_prefs=None,
-                 use_json=False):
+                 use_json=False, include_raw=False):
         """
         Creates a packet capture object by reading from file.
 
@@ -34,12 +38,13 @@ class FileCapture(Capture):
         :param override_prefs: A dictionary of tshark preferences to override, {PREFERENCE_NAME: PREFERENCE_VALUE, ...}.
         :param disable_protocol: Tells tshark to remove a dissector for a specific protocol.
         :param use_json: Uses tshark in JSON mode (EXPERIMENTAL). It is a good deal faster than XML
+        :param include_raw: Include raw hexdump (EXPERIMENTAL).
         but also has less information. Available from Wireshark 2.2.0.
         """
         super(FileCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
                                           decryption_key=decryption_key, encryption_type=encryption_type,
                                           decode_as=decode_as, disable_protocol=disable_protocol, tshark_path=tshark_path,
-                                          override_prefs=override_prefs, use_json=use_json)
+                                          override_prefs=override_prefs, use_json=use_json, include_raw=include_raw)
         self.input_filename = input_file
         if not isinstance(input_file, basestring):
             self.input_filename = input_file.name

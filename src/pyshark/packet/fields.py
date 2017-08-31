@@ -88,6 +88,8 @@ class LayerFieldsContainer(str, Pickleable):
         value = main_field.get_default_value()
         if value is None:
             value = ''
+        if type(value) is unicode:
+            value = value.encode('utf-8')
         obj = str.__new__(cls, value, *args, **kwargs)
         obj.fields = [main_field]
         return obj

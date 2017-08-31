@@ -89,7 +89,7 @@ class Layer(Pickleable):
         if self.layer_name == 'geninfo':
             return ''
         return self.layer_name + '.'
-        
+
     @property
     def field_names(self):
         """
@@ -122,6 +122,8 @@ class Layer(Pickleable):
         s = 'Layer %s:' % self.layer_name.upper() + os.linesep
         for field_line in self._get_all_field_lines():
             s += field_line
+        if type(s) is unicode:
+            s = s.encode('utf-8')
         return s
 
     def pretty_print(self):
